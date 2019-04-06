@@ -106,9 +106,27 @@ void display() {
 	////glVertex2d(800, 300);
 	////glVertex2d(1020, 550);
 	//glVertex2d(820, 400);
-	glVertex2d(780, 500);
-	glVertex2d(700, 600);
-	glVertex2d(620, 640);
+	for (int i = 0; i <= t; i++) {
+		float pos = (float)i / (float)t;
+		GLfloat x = bezierCurve(pos, 820, 820, 770, 750);
+		GLfloat y = bezierCurve(pos, 400, 410, 500, 500);
+		glVertex2f(x, y);
+	}
+	//glVertex2d(770, 500);
+	for (int i = 0; i <= t; i++) {
+		float pos = (float)i / (float)t;
+		GLfloat x = bezierCurve(pos, 750, 780, 680, 700);
+		GLfloat y = bezierCurve(pos, 500, 540, 630, 600);
+		glVertex2f(x, y);
+	}
+	//glVertex2d(700, 600);
+	for (int i = 0; i <= t; i++) {
+		float pos = (float)i / (float)t;
+		GLfloat x = bezierCurve(pos, 700, 700, 640, 620);
+		GLfloat y = bezierCurve(pos, 600, 630, 630, 630);
+		glVertex2f(x, y);
+	}
+	//glVertex2d(620, 630);
 	//glVertex2d(640, 850);
 
 	/*for (int i = 0; i <= t; i++) {
@@ -121,8 +139,94 @@ void display() {
 	//glVertex2d(100, 200);
 	//glVertex2d(400, 200);
 	glEnd();
+	//tubes right side
 
-	
+
+	glBegin(GL_POLYGON);
+	//glVertex2f(620, 630);
+	t = 30;
+	for (int i = 0; i <= t; i++) {
+		float pos = (float)i / (float)t;
+		GLfloat x = bezierCurve(pos, 620, 630, 770, 750);
+		GLfloat y = bezierCurve(pos, 630, 650, 670, 650);
+		glVertex2f(x, y);
+	}
+	//glVertex2f(750, 650);
+	for (int i = 0; i <= t; i++) {
+		float pos = (float)i / (float)t;
+		GLfloat x = bezierCurve(pos, 750, 760, 780, 770);
+		GLfloat y = bezierCurve(pos, 650, 670, 640, 620);
+		glVertex2f(x, y);
+	}
+	//glVertex2f(770, 620);
+	t = 10;
+	for (int i = 0; i <= t; i++) {
+		float pos = (float)i / (float)t;
+		GLfloat x = bezierCurve(pos, 770, 750, 640, 640);
+		GLfloat y = bezierCurve(pos, 620, 630, 610, 580);
+		glVertex2f(x, y);
+	}
+	//glVertex2f(640, 590);
+	glEnd();
+	//right 2,3rd tube
+	glBegin(GL_POLYGON);
+	glVertex2f(710,580);
+	//glVertex2f(760,600);
+	for (int i = 0; i <= t; i++) {
+		float pos = (float)i / (float)t;
+		GLfloat x = bezierCurve(pos, 760, 780, 780, 780);
+		GLfloat y = bezierCurve(pos, 600, 600, 590, 570);
+		glVertex2f(x, y);
+	}
+	//glVertex2f(780,570);
+	for (int i = 0; i <= t; i++) {
+		float pos = (float)i / (float)t;
+		GLfloat x = bezierCurve(pos, 780, 750, 750, 750);
+		GLfloat y = bezierCurve(pos, 570, 560, 540, 560);
+		glVertex2f(x, y);
+	}
+	//glVertex2f(750,560);
+	//glVertex2f(780, 540);
+	for (int i = 0; i <= t; i++) {
+		float pos = (float)i / (float)t;
+		GLfloat x = bezierCurve(pos, 780, 800, 780, 780);
+		GLfloat y = bezierCurve(pos, 540, 540, 515, 520);
+		glVertex2f(x, y);
+	}
+	//glVertex2f(780, 520);
+	glVertex2f(720, 530);
+
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	//glVertex2f(360, 520);
+	for (int i = 0; i <= t; i++) {
+		float pos = (float)i / (float)t;
+		GLfloat x = bezierCurve(pos, 360, 340, 350, 360);
+		GLfloat y = bezierCurve(pos, 520, 520, 550, 560);
+		glVertex2f(x, y);
+	}
+	//glVertex2f(360, 580);
+	glVertex2f(410, 550);
+	glVertex2f(410, 510);
+
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	//glVertex2f(360, 470);
+	for (int i = 0; i <= t; i++) {
+		float pos = (float)i / (float)t;
+		GLfloat x = bezierCurve(pos, 360, 340, 350, 360);
+		GLfloat y = bezierCurve(pos, 470, 470, 500, 510);
+		glVertex2f(x, y);
+	}
+	//glVertex2f(360, 510);
+	glVertex2f(410, 500);
+	glVertex2f(410, 460);
+	glEnd();
+
+
+
 
 	glFlush();
 }
