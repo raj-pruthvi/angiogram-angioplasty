@@ -5,6 +5,8 @@
 float y[] = {11.0,11.0-3,11.0-6,11.0-9};
 float WIDTH = 800.0;
 float HEIGHT = 600.0;
+float vesselLength = 20.0;
+float cellLength = 1.0;
 
 void init() {
   glMatrixMode(GL_PROJECTION);
@@ -33,22 +35,22 @@ void drawVessel(){
   glScalef(0.15,0.1,0.0);
   glTranslatef(0.0,7.0,0.0);
   glRotatef(45.0, 1.0, 0.0, 0.0);    
-  gluCylinder(quadratic,0.5,0.5,20.0,20,20);
+  gluCylinder(quadratic,0.5,0.5,vesselLength,20,20);
 	glPopMatrix();
 	glutSwapBuffers();
 }
 
 void drawCell(int y){
-	glPushMatrix();
+  glPushMatrix();
   glColor3f(0.7,0,0);
   glScalef(0.1,0.1,0.01);
   glTranslatef(0.0,y,0.0);
   glRotatef(45.0, 1.0, 0.0, 0.0);
-	GLUquadricObj *quadratic;
-	quadratic = gluNewQuadric();
-	gluCylinder(quadratic,0.5,0.5,1.0,10,10);
-	glPopMatrix();
-	glutSwapBuffers();
+    GLUquadricObj *quadratic;
+    quadratic = gluNewQuadric();
+    gluCylinder(quadratic,0.5,0.5,cellLength,10,10);
+    glPopMatrix();
+    glutSwapBuffers();
 }
 
 void display(){
