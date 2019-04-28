@@ -267,29 +267,36 @@ void display() {
 
 	glEnd();
 
-	glColor3f(1.0, 0.0, 0.0);
+
+	//AORTA BIG TUBE
+	glColor4f(1.0, 0.0, 0.0,1.0);
 	glBegin(GL_POLYGON);
 	//glVertex2f(610, 650);
 	//glVertex2f(510,660);
 	glVertex2f(607, 638);
+	//glColor3f(1.0, 0.478, 0.537);
+
 	for (int i = 0; i <= t; i++) {
 		float pos = (float)i / (float)t;
 		GLfloat x = bezierCurve(pos, 610, 610, 510, 510);
 		GLfloat y = bezierCurve(pos, 650, 660, 700, 660);
 		glVertex2f(x, y);
 	}
+	glColor3f(1.0, 0.078, 0.180);
+
 	for (int i = 0; i <= t; i++) {
 		float pos = (float)i / (float)t;
-		GLfloat x = bezierCurve(pos, 510, 510, 410, 480);
-		GLfloat y = bezierCurve(pos, 660, 690, 530, 485);
+		GLfloat x = bezierCurve(pos, 510, 510, 410, 483);
+		GLfloat y = bezierCurve(pos, 660, 690, 530, 483);
 		glVertex2f(x, y);
 	}
+	//glColor3f(0.690, 0.152, 0.211);
 	//glVertex2f(480, 500);
 	//glVertex2f(490, 500);
 	for (int i = 0; i <= t; i++) {
 		float pos = (float)i / (float)t;
-		GLfloat x = bezierCurve(pos, 480, 490, 490, 560);
-		GLfloat y = bezierCurve(pos, 485, 485, 460, 460);
+		GLfloat x = bezierCurve(pos, 483, 483, 490, 560);
+		GLfloat y = bezierCurve(pos, 483, 483, 460, 460);
 		glVertex2f(x, y);
 	}
 	//glVertex2f(560,460);
@@ -300,11 +307,96 @@ void display() {
 		glVertex2f(x, y);
 	}
 	//glVertex2f(590,530);
-
 	//glVertex2f(590,510);
 	glEnd();
+	
 
+	//AORTA COVER(SKIN)
+	glColor3f(0.9, 0.7, 0.5);
+	glBegin(GL_POLYGON);
+	//glVertex2f(650,530);
+	for (int i = 0; i <= t; i++) {
+		float pos = (float)i / (float)t;
+		GLfloat x = bezierCurve(pos, 670, 670, 540, 540);
+		GLfloat y = bezierCurve(pos, 520, 520, 510, 540);
+		glVertex2f(x, y);
+	}
+	//glVertex2f(520,550);
+	for (int i = 0; i <= t; i++) {
+		float pos = (float)i / (float)t;
+		GLfloat x = bezierCurve(pos, 540, 520, 540, 570);
+		GLfloat y = bezierCurve(pos, 540, 540, 630, 630);
+		glVertex2f(x, y);
+	}
+	//glVertex2f(550, 610);
+	for (int i = 0; i <= t; i++) {
+		float pos = (float)i / (float)t;
+		GLfloat x = bezierCurve(pos, 570, 570, 670, 670);
+		GLfloat y = bezierCurve(pos, 630, 640, 640, 630);
+		glVertex2f(x, y);
+	}
+	//glVertex2f(650, 610);
+	glEnd();
 	glFlush();
+
+
+	//AORTA TUBE 1
+	glColor3f(1.0, 0.078, 0.180); //CHANGED COLOR TO LRED
+	glBegin(GL_POLYGON);
+	glVertex2f(510, 630);
+	glVertex2f(555, 630);
+	//glVertex2f(520, 730);
+	for (int i = 0; i <= t; i++) {
+		float pos = (float)i / (float)t;
+		GLfloat x = bezierCurve(pos, 515, 505, 480, 490);
+		GLfloat y = bezierCurve(pos, 710, 720, 690, 680);
+		glVertex2f(x, y);
+	}
+	//glVertex2f(500, 700);
+	glEnd();
+
+	//AORTA TUBE 2
+	glBegin(GL_POLYGON);
+	glVertex2f(540, 630);
+	glVertex2f(585, 630);
+	//glVertex2f(590, 740);
+	for (int i = 0; i <= t; i++) {
+		float pos = (float)i / (float)t;
+		GLfloat x = bezierCurve(pos, 585, 585, 540, 540);
+		GLfloat y = bezierCurve(pos, 720, 740, 740, 720);
+		glVertex2f(x, y);
+	}
+	//glVertex2f(550, 740);
+	glEnd();
+
+	//AORTA TUBE 3
+	glBegin(GL_POLYGON);
+	//glVertex2f(620, 730);
+	for (int i = 0; i <= t; i++) {
+		float pos = (float)i / (float)t;
+		GLfloat x = bezierCurve(pos, 615, 625, 650, 640);
+		GLfloat y = bezierCurve(pos, 710, 720, 690, 680);
+		glVertex2f(x, y);
+	}
+	//glVertex2f(640, 700);
+	glVertex2f(610, 650);
+	glVertex2f(565, 650);
+	glEnd();
+
+	//AORTA TUBES COVER
+	glColor3f(1.0, 0.078, 0.180);
+	glBegin(GL_POLYGON);
+	//glVertex2f(520, 700);
+	for (int i = 0; i <= t; i++) {
+		float pos = (float)i / (float)t;
+		GLfloat x = bezierCurve(pos, 520, 520, 630, 620);
+		GLfloat y = bezierCurve(pos, 680, 695, 695, 680);
+		glVertex2f(x, y);
+	}
+	//glVertex2f(630, 700);
+	glVertex2f(600, 640);
+	glVertex2f(550, 640);
+	glEnd();
 }
 
 /*void reshape(GLsizei w, GLsizei h) {
