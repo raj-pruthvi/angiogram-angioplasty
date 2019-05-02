@@ -559,8 +559,8 @@ void reshape(GLsizei w, GLsizei h) {
 	gluOrtho2D(0.0,(GLdouble)w, 0.0, (GLdouble)h);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	printf_s("%d\n", w);
-	printf_s("%d\n", h);
+	// printf_s("%d\n", w);
+	// printf_s("%d\n", h);
 	ww = w;
 	wh = h;
 }
