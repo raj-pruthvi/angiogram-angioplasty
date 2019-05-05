@@ -6,6 +6,7 @@
 GLsizei ww = 1536;
 GLsizei wh = 801;
 float inc = 0.0;
+float color[] = {1.0, 0.078, 0.180};
 
 GLfloat bezierCurve(float t, GLfloat P0, GLfloat P1, GLfloat P2, GLfloat P3) {
 	// Cubic bezier Curve
@@ -16,58 +17,7 @@ GLfloat bezierCurve(float t, GLfloat P0, GLfloat P1, GLfloat P2, GLfloat P3) {
 	return point;
 }
 
-void update(int v) {
-	if (inc < 1.0)
-		inc += 0.8;
-
-	glutPostRedisplay();
-	glutTimerFunc(900, update, 0);
-}
-
-void display() {
-	//vector<int> heart{ 640,850,620,800,600,750,600,650,630,550,680,500,750,460,850,440,1000,500 };
-	int start1x = 400, start1y = 200;
-	int start2x = 800, start2y = 200;
-	int t1x = 400, t1y = 350, t2x = 800, t2y = 350;
-	glPointSize(5.0);
-	//glColor3b(1.0, 1.0, 0.0);
-	glLineWidth(2.5);
-	glBegin(GL_LINE_STRIP);
-	/*for (std::vector<int>::size_type i = 0; i != heart.size()-1; i+=2) {
-		glVertex2d(heart[i], heart[i + 1]);
-	}*/
-	glColor3f(1.0, 0.5, 0.5);
-	//int t = 30;
-	/*
-	glVertex2d(440, 650);
-	glVertex2d(420, 600);
-	glVertex2d(400, 550);
-	glVertex2d(400, 450);
-	glVertex2d(400, 450);
-	glVertex2d(430, 350);
-	glVertex2d(480, 300);
-	glVertex2d(550, 260);
-	glVertex2d(650, 240);
-	glVertex2d(800, 300);
-	//glVertex2d(1020, 550);
-	glVertex2d(820, 400);
-	glVertex2d(780, 500);	
-	glVertex2d(680, 600);
-	glVertex2d(600, 640);
-	glVertex2d(440, 650);
-	*/
-	
-	/*for (int i = 0; i <= t; i++) {
-		float pos = (float)i / (float)t;
-		GLfloat x = bezierCurve(pos, start1x, t1x, t2x, start2x);
-		GLfloat y = bezierCurve(pos, start2y, t1y, t2y, start2y);
-		glVertex2f(x, y);
-	}
-	*/
-	//glVertex2d(100, 200);
-	//glVertex2d(400, 200);
-	glEnd();
-	
+void shape(){
 	glColor4f(0.9, 0.7, 0.5, 1.0);
 	glBegin(GL_POLYGON);
 	
@@ -150,9 +100,10 @@ void display() {
 	//glVertex2d(100, 200);
 	//glVertex2d(400, 200);
 	glEnd();
-	//tubes right side
+}
 
-
+void tubes(){
+	int t = 0;
 	glBegin(GL_POLYGON);
 	//glVertex2f(620, 630);
 	t = 30;
@@ -275,9 +226,10 @@ void display() {
 	//glVertex2f(460, 250);
 
 	glEnd();
+}
 
-
-	//AORTA BIG TUBE
+void aorta(){
+	int t = 10;
 	glColor4f(1.0, 0.0, 0.0,1.0);
 	glBegin(GL_POLYGON);
 	//glVertex2f(610, 650);
@@ -318,9 +270,10 @@ void display() {
 	//glVertex2f(590,530);
 	//glVertex2f(590,510);
 	glEnd();
-	
+}
 
-	//AORTA COVER(SKIN)
+void aortaSkin(){
+	int t = 10;
 	glColor3f(0.9, 0.7, 0.5);
 	glBegin(GL_POLYGON);
 	//glVertex2f(650,530);
@@ -346,10 +299,11 @@ void display() {
 	}
 	//glVertex2f(650, 610);
 	glEnd();
-	glFlush();
+}
 
-
-	//AORTA TUBE 1
+void aortaTubes(){
+	int t = 10;
+		//AORTA TUBE 1
 	glColor3f(1.0, 0.078, 0.180); //CHANGED COLOR TO LRED
 	glBegin(GL_POLYGON);
 	glVertex2f(510, 630);
@@ -406,22 +360,22 @@ void display() {
 	glVertex2f(600, 640);
 	glVertex2f(550, 640);
 	glEnd();
+}
 
-	//AORTA INNER VEINS 1
+void veins(){
+		//AORTA INNER VEINS 1
 	/////////////////////////////////////////////////////////////////////////////////////
 	
-	glColor3f(1.0, 0.078, 0.180);
 	glLineWidth(8);
 	glBegin(GL_LINE_STRIP);
 	//glVertex2f(500, 390);
-	t = 10;
+	int t = 10;
 	for (int i = 0; i <= t; i++) {
 		float pos = (float)i / (float)t;
 		GLfloat x = bezierCurve(pos, 500, 500, 450, 450);
 		GLfloat y = bezierCurve(pos, 490, 420, 420, 350);
-		//glColor3f(1.0 - inc, 0.078 - inc, 0.180 - inc);
+		glColor3f(color[0], color[1], color[2]);
 		glVertex2f(x, y);
-
 	}
 	glEnd();
 	
@@ -435,28 +389,13 @@ void display() {
 		float pos = (float)i / (float)t;
 		GLfloat x = bezierCurve(pos, 490, 470, 500, 550);
 		GLfloat y = bezierCurve(pos, 450, 450, 300, 260);
-		//glColor3f(1.0 - inc, 0.078 - inc, 0.180 - inc);
+		glColor3f(color[0], color[1], color[2]);
 		glVertex2f(x, y);
 	}
 	//glVertex2f(500, 350);
 	//glVertex2f();
 	glEnd();
 
-	glLineWidth(8);
-	////////////////
-	//AORTA INNER VEINS 3
-	glBegin(GL_LINE_STRIP);
-	//glVertex2f(600, 510);
-	t = 30;
-	for (int i = 0; i <= t; i++) {
-		float pos = (float)i / (float)t;
-		GLfloat x = bezierCurve(pos, 595, 650, 800, 780);
-		GLfloat y = bezierCurve(pos, 515, 540, 480, 450);
-		//glColor3f(1.0 - inc, 0.078 - inc, 0.180 - inc);
-		glVertex2f(x, y);
-	}
-	//glVertex2f(630, 250);
-	glEnd();
 
 	/////////////////////
 	//AORTA INNER VEINS 4
@@ -468,41 +407,25 @@ void display() {
 		float pos = (float)i / (float)t;
 		GLfloat x = bezierCurve(pos, 700, 670, 770, 750);
 		GLfloat y = bezierCurve(pos, 510, 470, 430, 300);
-		//glColor3f(1.0 - inc, 0.078 - inc, 0.180 - inc);
+		glColor3f(color[0], color[1], color[2]);
 		glVertex2f(x, y);
 	}
 	//glVertex2f(620, 250);
 	glEnd();
 
-	////////////////////
-	//AORTA INNER VEINS 5
-
-	glBegin(GL_LINE_STRIP);
-	//glVertex2f(780, 450);		
-	for (int i = 0; i <= t; i++) {
-		float pos = (float)i / (float)t;
-		GLfloat x = bezierCurve(pos, 780, 780, 650, 650);
-		GLfloat y = bezierCurve(pos, 450, 400, 420, 350);
-		//glColor3f(1.0 - inc, 0.078 - inc, 0.180 - inc);
-		glVertex2f(x, y);
-	}
-	//glVertex2f(650, 350);
-	glEnd();
-
 	////////////////////////////////
 	//AORTA INNER VEINS 6-1
+
 	glBegin(GL_LINE_STRIP);
-	//glVertex2f(450, 350);
 	for (int i = 0; i <= t; i++) {
 		float pos = (float)i / (float)t;
 		GLfloat x = bezierCurve(pos, 450, 450, 600, 650);
 		GLfloat y = bezierCurve(pos, 350, 300, 400, 250);
-		//glColor3f(1.0 - inc, 0.078 - inc, 0.180 - inc);
+		glColor3f(color[0], color[1], color[2]);
 		glVertex2f(x, y);
 	}
 	//glVertex2f(650, 250);
 	glEnd();
-
 	/////////////////////
 	//AORTA INNER VEINS 2-6
 	glBegin(GL_LINE_STRIP);
@@ -511,7 +434,7 @@ void display() {
 		float pos = (float)i / (float)t;
 		GLfloat x = bezierCurve(pos, 550, 550, 600, 600);
 		GLfloat y = bezierCurve(pos, 340, 250, 250, 250);
-		//glColor3f(1.0 - inc, 0.078 - inc, 0.180 - inc);
+		glColor3f(color[0], color[1], color[2]);
 		glVertex2f(x, y);
 	}
 	//glVertex2f(600, 250); 
@@ -523,15 +446,107 @@ void display() {
 		float pos = (float)i / (float)t;
 		GLfloat x = bezierCurve(pos, 700, 650, 770, 740);
 		GLfloat y = bezierCurve(pos, 405, 340, 310, 270);
-		//glColor3f(1.0 - inc, 0.078 - inc, 0.180 - inc);
+		glColor3f(color[0], color[1], color[2]);
 		glVertex2f(x, y);
 	}
 	//glVertex2f(740, 270);
 	glEnd();
 
-	glFlush();
+		glLineWidth(8);
+	////////////////
+	//AORTA INNER VEINS 3
+	glBegin(GL_LINE_STRIP);
+	//glVertex2f(600, 510);
+	t = 30;
+	for (int i = 0; i <= t; i++) {
+		float pos = (float)i / (float)t;
+		GLfloat x = bezierCurve(pos, 595, 650, 800, 780);
+		GLfloat y = bezierCurve(pos, 515, 540, 480, 450);
+		glColor3f(color[0], color[1], color[2]);
+		glVertex2f(x, y);
+	}
+	//glVertex2f(630, 250);
+	glEnd();
+
+		////////////////////
+	//AORTA INNER VEINS 5
+
+	glBegin(GL_LINE_STRIP);
+	//glVertex2f(780, 450);		
+	for (int i = 0; i <= t; i++) {
+		float pos = (float)i / (float)t;
+		GLfloat x = bezierCurve(pos, 780, 780, 650, 650);
+		GLfloat y = bezierCurve(pos, 450, 400, 420, 350);
+		glColor3f(color[0], color[1], color[2]);
+		glVertex2f(x, y);
+	}
+	//glVertex2f(650, 350);
+	glEnd();
+
 }
 
+void display() {
+	//vector<int> heart{ 640,850,620,800,600,750,600,650,630,550,680,500,750,460,850,440,1000,500 };
+	// int start1x = 400, start1y = 200;
+	// int start2x = 800, start2y = 200;
+	// int t1x = 400, t1y = 350, t2x = 800, t2y = 350;
+	// glPointSize(5.0);
+	//glColor3b(1.0, 1.0, 0.0);
+	// glLineWidth(2.5);
+	// glBegin(GL_LINE_STRIP);
+	/*for (std::vector<int>::size_type i = 0; i != heart.size()-1; i+=2) {
+		glVertex2d(heart[i], heart[i + 1]);
+	}*/
+	// glColor3f(1.0, 0.5, 0.5);
+	//int t = 30;
+	/*
+	glVertex2d(440, 650);
+	glVertex2d(420, 600);
+	glVertex2d(400, 550);
+	glVertex2d(400, 450);
+	glVertex2d(400, 450);
+	glVertex2d(430, 350);
+	glVertex2d(480, 300);
+	glVertex2d(550, 260);
+	glVertex2d(650, 240);
+	glVertex2d(800, 300);
+	//glVertex2d(1020, 550);
+	glVertex2d(820, 400);
+	glVertex2d(780, 500);	
+	glVertex2d(680, 600);
+	glVertex2d(600, 640);
+	glVertex2d(440, 650);
+	*/
+	
+	/*for (int i = 0; i <= t; i++) {
+		float pos = (float)i / (float)t;
+		GLfloat x = bezierCurve(pos, start1x, t1x, t2x, start2x);
+		GLfloat y = bezierCurve(pos, start2y, t1y, t2y, start2y);
+		glVertex2f(x, y);
+	}
+	*/
+	//glVertex2d(100, 200);
+	//glVertex2d(400, 200);
+	// glEnd();
+	shape();
+
+	//tubes right side
+	tubes();
+
+	//AORTA BIG TUBE	
+	aorta();
+	
+	//AORTA COVER(SKIN)	
+	aortaSkin();
+
+	glFlush();
+
+	aortaTubes();
+	veins();
+
+	//glVertex2f(450, 350);
+	glFlush();
+}
 /*void reshape(GLsizei w, GLsizei h) {
 	glViewport(0, 0, (GLdouble)w, (GLdouble)h);
 	glMatrixMode(GL_PROJECTION);
@@ -551,6 +566,12 @@ void display() {
 	wh = h;
 }*/
 
+void keyboardPress(unsigned char key, int x, int y){
+	if(key == 'c'){
+		color[0] = 0.0;
+	}
+	glutPostRedisplay();
+}
 
 void reshape(GLsizei w, GLsizei h) {
 	glViewport(150, -50, w, h);
@@ -590,7 +611,7 @@ int main(int argc, char** argv)
 
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
-	//glutTimerFunc(1500, update, 0);
+	glutKeyboardFunc(keyboardPress);
 	glutMainLoop();
 	return 0;
 }
