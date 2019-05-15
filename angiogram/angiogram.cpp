@@ -1,8 +1,19 @@
-#include<stdio.h>
 #include<GL/glut.h>
 #include<math.h>
-#include<iostream>
-#include<vector>
+
+float start = 21.0;
+float ym = 21.0;
+float y[] = {start,start-3,start-6,start-9};
+float yw = 11.0;
+float dec = 0.0;
+float thick = 0.010;
+float WIDTH = 400.0;
+float HEIGHT = 400.0;
+float vesselLength = 20.0;
+float cellLength = 1.0;
+int count = 0;
+int normal = 1, mesh = 0, block = 0;
+
 GLsizei ww = 1536;
 GLsizei wh = 801;
 float inc = 0.0;
@@ -586,7 +597,6 @@ void reshape(GLsizei w, GLsizei h) {
 	wh = h;
 }
 
-
 void init() {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -599,22 +609,229 @@ void init() {
 
 }
 
+void init2() {
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  gluPerspective(60, (float)WIDTH/HEIGHT, 0.01f, 100.0f);
+  glMatrixMode(GL_MODELVIEW);
+}
+
+void bloodFlow(int value) {
+  int i = 0;
+  if (y[i] != -10.0) {
+      y[i] -= 1.0;
+      y[i+1] -= 1.0;
+      y[i+2] -= 1.0;
+      y[i+3] -= 1.0;
+  }
+  glutPostRedisplay();
+  glutTimerFunc(400, bloodFlow, 0);
+}
+
+void putMesh(int value) {
+  if (ym != 1.0)
+    ym -= 1.0;
+  glutPostRedisplay();
+  glutTimerFunc(400, putMesh, 0);
+}
+
+void reduceFat(int value) {
+  if (yw != 7.0)
+    yw -= 1.0;
+  else{
+    if(dec <= 0.1 && count <= 5){
+      thick += 0.015;
+      dec += 0.005;
+      count += 1;
+      if (count == 5){
+        thick = 0.010;
+        count = 0;
+      }
+    }
+    else
+      return;
+  }
+  glutPostRedisplay();
+  glutTimerFunc(400, reduceFat, 0);
+}
+
+void drawVessel(){
+	glPushMatrix();
+  glColor3f(0.0,0,0.5);
+  GLUquadricObj *quadratic;
+  quadratic = gluNewQuadric();
+  glScalef(0.15,0.1,0.0);
+  glTranslatef(0.0,7.0,0.0);
+  glRotatef(45.0, 1.0, 0.0, 0.0);    
+  gluCylinder(quadratic,0.5,0.5,vesselLength,32,32);
+	glPopMatrix();
+	glutSwapBuffers();
+}
+
+void DrawCircle(float cx, float cy, float r, int num_segments, float tx, float ty, float sx, float sy, float theta){
+  glPushMatrix();
+  glScalef(sx,sy,0.0);
+  glTranslatef(tx,ty,0.0);
+  glRotatef(theta, 0.0, 0.0, 10.0);
+  glBegin(GL_TRIANGLE_FAN);
+  if (r >= 0){
+    for(int ii = 0; ii < num_segments; ii++){
+        float theta = 2.0f * 3.1415926f * float(ii) / float(num_segments);
+        float x = r * cosf(theta/2);
+        float y = r * sinf(theta/2);
+        glVertex2f(x + cx, y + cy);
+    }
+  }
+  glEnd();
+  glPopMatrix();
+}
+
+void drawFat(float tx, float ty, float sx, float sy, float theta) {
+  glColor3f(1.0, 0.5, 0.0);
+  DrawCircle(0.5, 0.5, 0.2 - dec, 35, tx, ty, sx, sy, theta);
+}
+
+void drawCell(int y){
+  glPushMatrix();
+  glColor3f(0.7,0,0);
+  glScalef(0.1,0.1,0.01);
+  glTranslatef(0.0,y,0.0);
+  glRotatef(45.0, 1.0, 0.0, 0.0);
+    GLUquadricObj *quadratic;
+    quadratic = gluNewQuadric();
+    gluCylinder(quadratic,0.5,0.5,cellLength,10,10);
+    glPopMatrix();
+    glutSwapBuffers();
+}
+
+void drawWire(){
+  glPushMatrix();
+  glColor3f(1.0,1.0,1.0);
+  GLUquadricObj *quadratic;
+  quadratic = gluNewQuadric();
+  glScalef(0.005,0.1,0.0);
+  glTranslatef(0.0,yw,0.0);
+  glRotatef(45.0, 1.0, 0.0, 0.0);    
+  gluCylinder(quadratic,0.5,0.5,vesselLength,32,32);
+  glPopMatrix();
+  glutSwapBuffers();
+}
+
+void drawBalloon(){
+  glPushMatrix();
+  glColor3f(1.0,1.0,1.0);
+  GLUquadricObj *quadratic;
+  quadratic = gluNewQuadric();
+  glScalef(0.010 + thick,0.1,0.0);
+  glTranslatef(0.0,yw+5,0.0);
+  glRotatef(45.0, 1.0, 0.0, 0.0);    
+  gluCylinder(quadratic,0.5,0.5,vesselLength,32,32);
+  glPopMatrix();
+  glutSwapBuffers();  
+}
+
+void drawMesh(){
+	glPushMatrix();
+  glColor3f(0.7,0.7,0.7);
+  GLUquadricObj *quadratic;
+  quadratic = gluNewQuadric();
+	gluQuadricDrawStyle(quadratic, GLU_LINE); /* flat shaded */
+ 	gluQuadricNormals(quadratic, GLU_SMOOTH);
+  glScalef(0.15,0.1,0.0);
+  glTranslatef(0.0,ym,0.0);
+  glRotatef(45.0, 1.0, 0.0, 0.0);    
+  gluCylinder(quadratic,0.5,0.5,vesselLength/6,32,32);
+	glPopMatrix();
+	glutSwapBuffers();	
+}
+
+void display2(){
+  glClear(GL_COLOR_BUFFER_BIT);
+  if(normal){
+    drawVessel();
+    int i = 0;
+    while (i < 4){
+      drawCell(y[i]);
+      i+=1;
+    }
+  }
+  if(mesh){
+    drawVessel();
+    drawFat(-.81, 0.49, 0.25, 1.0, -90.0);
+    drawFat(.81, -0.49, 0.25, 1.0, 90.0);
+    drawMesh();      
+    int i = 0;         
+    while (i < 4){
+      drawCell(y[i]);
+      i+=1;
+    }
+  }
+  if(block){
+    drawVessel();
+    drawFat(-.81, 0.49, 0.25, 1.0, -90.0);
+    drawFat(.81, -0.49, 0.25, 1.0, 90.0);
+    drawWire();
+    drawBalloon();
+  }
+  glFlush();
+}
+
+void keyboardEvent(unsigned char key, int xc, int yc){
+  switch(key){
+    case 'm' : block = 0;
+               normal = 0;
+               mesh = 1;
+               glutTimerFunc(300, putMesh, 0);               
+               break;
+
+    case 'n' : block = 0;
+               mesh = 0;
+               normal = 1;
+               glutTimerFunc(300, bloodFlow, 0);
+               y[0] = start; y[1] = start - 3; y[2] = start - 6; y[3] = start - 9;
+               break;
+
+    case 'b' : block = 0;
+               normal = 0;
+               mesh = 1;
+               glutTimerFunc(300, bloodFlow, 0);
+               y[0] = start; y[1] = start - 3; y[2] = start - 6; y[3] = start - 9;
+               break;
+
+    case 'f' : mesh = 0;
+               normal = 0;
+               block = 1;
+               glutTimerFunc(300, reduceFat, 0);
+
+    default : break;
+  }
+}
+
+void mouseEvent(int button, int state, int x, int y){
+	if(button == GLUT_MIDDLE_BUTTON && state ==  GLUT_UP){
+		glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);	
+    glutInitWindowPosition(100, 100);
+	  glutInitWindowSize(WIDTH, HEIGHT);
+	  init2();
+	  glutCreateWindow("Inside");
+	  glutDisplayFunc(display2);	
+	  glutKeyboardFunc(keyboardEvent);
+	  glutMainLoop();
+	}
+}
+
 int main(int argc, char** argv)
 {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 	glutInitWindowSize((GLdouble)ww, (GLdouble)wh);
 	glutInitWindowPosition(100, 100);
-	glutCreateWindow(argv[0]);
-
+	glutCreateWindow("Heart");
 	init();
-
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
 	glutKeyboardFunc(keyboardPress);
+	glutMouseFunc(mouseEvent);
 	glutMainLoop();
 	return 0;
 }
-
-
-
