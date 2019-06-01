@@ -5,4 +5,4 @@ Angiography is an imaging test that uses X-rays to view your body’s blood vess
 ## Angioplasty
 Angioplasty, also called as balloon angioplasty is an endovascular procedure to widen narrowed or obstructed arteries or veins. A deflated balloon is passed over a gauge-wire into narrowed vessel and then inflated to some extent. The baloon forces the vessel to extend. A stent is then inserted to ensure the vessel is open.
 
-![Alt Text](heart1.png)
+![Alt Text](images/heart1.png)
